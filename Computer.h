@@ -40,18 +40,18 @@ struct Computer {
 		MC["JMP"] = 0b0110; // Set PC to instruction ID
 		MC["JC"]  = 0b0111; // Jump if carry
 		MC["JZ"]  = 0b1000; // Jump if zero
-		MC["OUT"]  = 0b1110; // Jump if zero
+		MC["OUT"] = 0b1110; // Put RA into OUT
 		MC["HLT"] = 0b1111; // Halt the clock
 
 		MICRO[MC["LDA"]][2] = SIG["IO"] | SIG["MI"];
 		MICRO[MC["LDA"]][3] = SIG["RO"] | SIG["AI"];
 
 		MICRO[MC["ADD"]][2] = SIG["IO"] | SIG["MI"];
-		MICRO[MC["ADD"]][3] = SIG["IO"] | SIG["BI"];
+		MICRO[MC["ADD"]][3] = SIG["RO"] | SIG["BI"];
 		MICRO[MC["ADD"]][4] = SIG["EO"] | SIG["AI"] | SIG["FI"];
 
 		MICRO[MC["SUB"]][2] = SIG["IO"] | SIG["MI"];
-		MICRO[MC["SUB"]][3] = SIG["IO"] | SIG["BI"];
+		MICRO[MC["SUB"]][3] = SIG["RO"] | SIG["BI"];
 		MICRO[MC["SUB"]][4] = SIG["SU"] | SIG["EO"] | SIG["AI"] | SIG["FI"];
 
 		MICRO[MC["STA"]][2] = SIG["IO"] | SIG["MI"];
@@ -87,7 +87,7 @@ struct Computer {
 	int MICRO[16][7];
 
 	bool running = true;
-	bool debug   = true;
+	bool debug   = false;
 
 	void tick() {
 		if (running) {
